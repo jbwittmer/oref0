@@ -204,7 +204,7 @@ ns)
         | openaps use $ZONE  \
           rezone --astimezone --date dateString - \
         | openaps use $ZONE  \
-          lsgaps --minutes 5 --after now  --date dateString -
+          lsgaps --minutes 6 --after now  --date dateString -
 
 
     ;;
@@ -292,11 +292,11 @@ ns)
     ;;
     temp_targets)
     expr=${1--24hours}
-    exec ns-get host $NIGHTSCOUT_HOST treatments.json "find[created_at][\$gte]=$(date -d $expr -Iminutes)&find[eventType]=Temporary+Target"
+    exec ns-get host $NIGHTSCOUT_HOST treatments.json "find[created_at][\$gte]=$(date -d $expr -Iminutes -u)&find[eventType]=Temporary+Target"
     ;;
     carb_history)
     expr=${1--24hours}
-    exec ns-get host $NIGHTSCOUT_HOST treatments.json "find[created_at][\$gte]=$(date -d $expr -Iminutes)&find[carbs][\$exists]=true"
+    exec ns-get host $NIGHTSCOUT_HOST treatments.json "find[created_at][\$gte]=$(date -d $expr -Iminutes -u)&find[carbs][\$exists]=true"
     ;;
     *)
     echo "Unknown request:" $OP
